@@ -1,0 +1,157 @@
+<!DOCTYPE html>  
+<html lang="my">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Ko Gyi Game Shop✨</title>  
+<style>  
+:root {  
+  --primary: #00f2fe; --secondary: #4facfe; --bg: #8700a2; --card: #CCCCCC; --item: #f9f9f9; --text: #000000; --warning: #000000; --danger: #d32f2f;
+}  
+body { margin:0; font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); }  
+.marquee-container { background: rgba(255, 77, 77, 0.15); color: var(--danger); padding: 8px 0; font-size: 11px; font-weight: bold; text-align: center; border-bottom: 1px solid var(--danger); }
+header { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); text-align: center; padding: 18px; font-size: 16px; color: var(--primary); font-weight: bold; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #30363d; }  
+.top-nav { display: flex; gap: 10px; padding: 15px; }
+.nav-btn { flex: 1; padding: 12px; border-radius: 12px; border: 1px solid var(--primary); background: rgba(0, 242, 254, 0.1); color: var(--primary); text-align: center; font-weight: bold; cursor: pointer; font-size: 13px; }
+.page { display: none; padding: 15px; }
+.page.active { display: block; }
+.card { background: var(--card); border-radius: 20px; padding: 15px; margin-bottom: 20px; border: 1px solid #30363d; }  
+h2 { color: var(--primary); margin-top: 0; font-size: 0.85rem; margin-bottom: 15px; border-left: 4px solid var(--primary); padding-left: 10px; text-transform: uppercase; }  
+.note-box { background: rgba(255, 204, 0, 0.1); border: 1px solid var(--warning); color: var(--warning); padding: 8px; border-radius: 10px; font-size: 10px; margin-bottom: 12px; text-align: center; }
+.diamond-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }  
+.diamond-item { background: var(--item); border-radius: 12px; padding: 10px 5px; text-align: center; font-size: 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 5px; border: 1px solid transparent; transition: 0.2s; } 
+.diamond-item img { width: 37px; height: 37px; object-fit: contain; }
+.price { font-weight: bold; color: var(--primary); font-size: 10px; }  
+.back-btn { background: #334155; color: #fff; padding: 10px 15px; border-radius: 8px; cursor: pointer; border: none; margin-bottom: 15px; font-size: 12px; }
+.payment-row { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 12px; margin-bottom: 10px; cursor: pointer; border: 1px solid #333; position: relative; }
+.payment-row img { width: 30px !important; height: 30px !important; border-radius: 6px; }
+.pay-info { font-size: 12px; }
+.copy-badge { background: var(--primary); color: #000; padding: 3px 6px; border-radius: 4px; font-size: 9px; font-weight: bold; position: absolute; right: 10px; }
+.popup { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.9); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(8px); }  
+.popup-box { background: #1c2128; width: 90%; max-width: 400px; border-radius: 20px; padding: 20px; border: 1px solid var(--primary); max-height: 90vh; overflow-y: auto; }  
+input, textarea, select { width: 100%; padding: 12px; margin-top: 10px; border-radius: 10px; border: 1px solid #30363d; background: #0d1117; color: white; outline: none; box-sizing: border-box; }  
+.btn { margin-top: 15px; padding: 15px; background: linear-gradient(45deg, var(--secondary), var(--primary)); color: #000; text-align: center; border-radius: 12px; font-weight: bold; cursor: pointer; border: none; width: 100%; }  
+#preview-img { width: 120px; height: auto; border-radius: 10px; margin: 15px auto; display: none; border: 1px solid var(--primary); }
+.history-item { background: #21262d; padding: 12px; border-radius: 12px; margin-bottom: 10px; border-left: 4px solid var(--primary); }
+.history-id { color: var(--primary); font-weight: bold; font-size: 14px; }
+.history-date { font-size: 10px; color: #8b949e; float: right; }
+</style>  
+</head>  
+<body>  
+
+<header>🎮 Ko Gyi Game Shop✨</header>  
+<div class="marquee-container"><marquee scrollamount="5">⚠️ ပြေစာအတုတင်ပါက Account Ban ခံရနိုင်ပါမည်။ Order ID ကို သေချာမှတ်ထားပေးပါ။ Telegram Owner - @Mgflash_2038</marquee></div>
+
+<section id="page-main" class="page active">
+  <div class="top-nav">
+    <div class="nav-btn" onclick="showPage('page-payment')">💳 ငွေလွှဲမည်</div>
+    <div class="nav-btn" onclick="showPage('page-history')">📋 အော်ဒါများ</div>
+  </div>
+  <div class="card">
+    <h2>ဂိမ်းနှင့် Application များ</h2>
+    <div class="diamond-grid" id="app-list-main"></div>
+  </div>
+</section>
+
+<section id="page-mlbb-server" class="page">
+  <button class="back-btn" onclick="showPage('page-main')">⬅️ Back</button>
+  <div class="card">
+    <h2>MLBB Server ရွေးချယ်ပါ</h2>
+    <div class="diamond-grid">
+      <div class="diamond-item" onclick="showPage('page-ml-myanmar')"><img src="https://i.ibb.co/qF40r1CJ/IMG-20251215-145339-565.png"><span>Myanmar</span></div>
+      <div class="diamond-item" onclick="showPage('page-ml-malaysia')"><img src="https://i.ibb.co/S4TRQJQv/IMG-20251215-145341-949.png"><span>Malaysia</span></div>
+      <div class="diamond-item" onclick="showPage('page-ml-philippines')"><img src="https://i.ibb.co/Q34WWDdy/IMG-20251215-145341-949.png"><span>Philippines</span></div>
+      <div class="diamond-item" onclick="showPage('page-ml-singapore')"><img src="https://i.ibb.co/3Yjnx53s/IMG-20251215-145341-949.png"><span>Singapore</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="page-ml-myanmar" class="page"><button class="back-btn" onclick="showPage('page-mlbb-server')">⬅️ Back</button><div class="card"><h2>🎟 Pass (MM)</h2><div class="diamond-grid" id="grid-my-pass"></div></div><div class="card"><h2>🎁 2 X Diamond (MM)</h2><div class="note-box">⚠️ ပထမတစ်ခါထည့်ရင် စိန်နှစ်စရပါမယ်။ထည့်ထားပြီးရင်ထက်ထည့်လို့မရပါ။စိန်တစ်ခုကိုတစ်ခါထည့်လို့ရပါမယ်။ </div><div class="diamond-grid" id="grid-my-promo"></div></div><div class="card"><h2>💎 Other (MM)</h2><div class="diamond-grid" id="grid-my-direct"></div></div></section>
+<section id="page-ml-malaysia" class="page"><button class="back-btn" onclick="showPage('page-mlbb-server')">⬅️ Back</button><div class="card"><h2>🎟 Pass (MY)</h2><div class="diamond-grid" id="grid-mal-pass"></div></div><div class="card"><h2>🎁 2 X Diamond (MY)</h2><div class="diamond-grid" id="grid-mal-promo"></div></div><div class="card"><h2>💎 Other (MY)</h2><div class="diamond-grid" id="grid-mal-direct"></div></div></section>
+<section id="page-ml-philippines" class="page"><button class="back-btn" onclick="showPage('page-mlbb-server')">⬅️ Back</button><div class="card"><h2>🎟 Pass (PH)</h2><div class="diamond-grid" id="grid-ph-pass"></div></div><div class="card"><h2>🎁 2 X Diamond (PH)</h2><div class="diamond-grid" id="grid-ph-promo"></div></div><div class="card"><h2>💎 Other (PH)</h2><div class="diamond-grid" id="grid-ph-direct"></div></div></section>
+<section id="page-ml-singapore" class="page"><button class="back-btn" onclick="showPage('page-mlbb-server')">⬅️ Back</button><div class="card"><h2>🎟 Pass (SG)</h2><div class="diamond-grid" id="grid-sg-pass"></div></div><div class="card"><h2>🎁 2 X Diamond (SG)</h2><div class="diamond-grid" id="grid-sg-promo"></div></div><div class="card"><h2>💎 Others (SG)</h2><div class="diamond-grid" id="grid-sg-direct"></div></div></section>
+
+<section id="page-pubg" class="page"><button class="back-btn" onclick="showPage('page-main')">⬅️ Back</button><div class="card"><h2>PUBG UC</h2><div class="diamond-grid" id="grid-pubg"></div></div></section>
+<section id="page-telegram" class="page"><button class="back-btn" onclick="showPage('page-main')">⬅️ Back</button><div class="card"><h2>Telegram Premium</h2><div class="diamond-grid" id="grid-telegram"></div></div></section>
+<section id="page-tiktok" class="page"><button class="back-btn" onclick="showPage('page-main')">⬅️ Back</button><div class="card"><h2>TikTok Coins</h2><div class="diamond-grid" id="grid-tiktok"></div></div></section>
+
+<section id="page-payment" class="page">
+  <button class="back-btn" onclick="showPage('page-main')">⬅️ Back</button>
+  <div class="card">
+    <h2>💳 ငွေလွှဲရန်</h2>
+    <div class="payment-row" onclick="copyNum('09985496310')"><img src="https://i.ibb.co/FfMXQW6/IMG-20251215-145341-949.png"><div class="pay-info"><b>Kpay</b><br>09985496310</div><span class="copy-badge">Copy</span></div>
+    <div class="payment-row" onclick="copyNum('09789457150')"><img src="https://i.ibb.co/kgq3fdTf/IMG-20251215-145341-949.png"><div class="pay-info"><b>Wave Pay</b><br>09789457150</div><span class="copy-badge">Copy</span></div>
+  </div>
+</section>
+
+<section id="page-history" class="page">
+    <button class="back-btn" onclick="showPage('page-main')">⬅️ Back</button>
+    <div class="card">
+        <h2>📋 ဝယ်ယူမှုမှတ်တမ်း</h2>
+        <a href="Https://t.me/+YCIHV-xdU103MWNl" target="_blank" style="text-decoration:none;">
+            <div class="btn" style="margin-bottom:20px;">📢 Join Channel To Check Status</div>
+        </a>
+        <div id="history-list"></div>
+    </div>
+</section>
+
+<div class="popup" id="popup">  
+  <div class="popup-box">
+    <div style="text-align:right; font-size:24px; color:#ff4d4d; cursor:pointer;" onclick="closePopup()">✕</div>
+    <h2 id="diaTitle" style="text-align:center; border:none; color:var(--primary); font-size: 1.2rem;"></h2>
+    <input id="userName" type="text" placeholder="@Telegram Username / Name">
+    
+    <div id="ml-id-fields" style="display:none; gap:10px;">
+        <input id="gid" type="number" placeholder="Game ID">
+        <input id="sid" type="number" placeholder="Server ID">
+    </div>
+
+    <div id="single-id-field" style="display:none;">
+        <input id="other_id" type="text" placeholder="Player ID / Username">
+    </div>
+
+    <select id="method"><option value="">Payment Method</option><option>KBZ Pay</option><option>Wave Pay</option></select>
+    <input type="file" id="img" accept="image/*" onchange="previewImg(event)">
+    <center><img id="preview-img"></center>
+    <textarea id="payNote" placeholder="မှတ်ချက် (Optional)"></textarea>
+    <button class="btn" id="submit-btn" onclick="sendOrder()">📩 Confirm Order</button>
+  </div>  
+</div>  
+
+<script>  
+const BOT_TOKEN = "8103883017:AAFVj-m7UtA20HpjfSZf_Euy0fSW8rHU-U8";  
+const CHAT_ID = "7090654595";  
+let selectedDiamond = "";
+
+const apps = [
+  {n:'MLBB', i:'https://i.ibb.co/qF40r1CJ/IMG-20251215-145339-565.png', p:'page-mlbb-server'},
+  {n:'PUBG', i:'https://www.pubgmobile.com/common/images/icon_logo.jpg', p:'page-pubg'},
+  {n:'TikTok', i:'https://i.ibb.co/qYf98Qcf/IMG-20251215-145341-949.png', p:'page-tiktok'},
+  {n:'Telegram', i:'https://i.ibb.co/1GVRvnSr/IMG-20251215-145341-949.png', p:'page-telegram'},
+  {n:'HOK', i:'https://i.ibb.co/XZHH0F8M/IMG-20251215-145341-949.png', p:'alert'},
+  {n:'Magic Chess', i:'https://i.ibb.co/cWf2r5d/IMG-20251215-145341-949.png', p:'alert'},
+  {n:'Free Fire', i:'https://i.ibb.co/8DgwLzF4/IMG-20251215-145341-949.png', p:'alert'},
+  {n:'Winds Met', i:'https://i.ibb.co/PG2NBLy2/IMG-20251215-145341-949.png', p:'alert'},
+  {n:'Heartopia', i:'https://i.ibb.co/twrYTyzk/IMG-20251215-145341-949.png', p:'alert'},
+  {n:'Blood Strike', i:'https://i.ibb.co/7xHHwtJw/IMG-20251215-145341-949.png', p:'alert'},
+  {n:'Delta Force', i:'https://i.ibb.co/5hjhbJ13/IMG-20251215-145341-949.png', p:'alert'},
+  {n:'Minecraft', i:'https://i.ibb.co/0Vm0FVM0/IMG-20251215-145341-949.png', p:'alert'},
+  {n:'Roblox', i:'https://i.ibb.co/xq0CXJpV/IMG-20251215-145341-949.png', p:'alert'},
+  {n:'AlightMotion', i:'https://i.ibb.co/SXXC9y9V/IMG-20251215-145341-949.png', p:'alert'},
+  {n:'CapCut', i:'https://i.ibb.co/3YkCs1GS/IMG-20251215-145341-949.png', p:'alert'},
+  {n:'Jump VPN', i:'https://i.ibb.co/rKKXX5WM/IMG-20251215-145341-949.png', p:'alert'},
+  {n:'Wink', i:'https://i.ibb.co/hJZNRxHY/IMG-20251215-145341-949.png', p:'alert'}
+];
+
+const pubgData = [['First Purchase Pack','4500','https://i.ibb.co/kVX2gpjm/pubg-uc.png'],['Metrials Packs','15000','https://i.ibb.co/0ypfFdTb/pubg-uc.png'],['Mythic Emblem Pack','22000','https://i.ibb.co/Dgr8zM3X/pubg-uc.png'],['Weekly Deal Pack 1','5000','https://i.ibb.co/CjYjN4j/pubg-uc.png'],['Weekly Deal Pack 2','15000','https://i.ibb.co/CjYjN4j/pubg-uc.png'],['Weekly Mythic Pack','17000','https://i.ibb.co/MkwxnNcN/pubg-uc.png'],['Prime ( 1month)','5000','https://i.ibb.co/V0n9s0SR/pubg-uc.png'],['Prime (6 months)','27000','https://i.ibb.co/V0n9s0SR/pubg-uc.png'],['Prime Plus ( 1 Month)','42500','https://i.ibb.co/VYzpxtYw/pubg-uc.png'],['Prime Plus ( 6 Months)','250000','https://i.ibb.co/VYzpxtYw/pubg-uc.png'],['Elite Pass Lv1 - 50','28000','https://i.ibb.co/6RT9SgmC/pubg-uc.png'],['Elite Pass LV1 -100','52000','https://i.ibb.co/6RT9SgmC/pubg-uc.png'],['Elite Pass Plus LV1 - 100','12000','https://i.ibb.co/PGK330SX/pubg-uc.png'],['60 UC','4500','https://i.ibb.co/1fBzngZF/pubg-uc.png'],['326 UC','22000','https://i.ibb.co/1fBzngZF/pubg-uc.png'],['660 UC','43000','https://i.ibb.co/1fBzngZF/pubg-uc.png'],['1800 UC','102000','https://i.ibb.co/1fBzngZF/pubg-uc.png'],['3850 UC','200000','https://i.ibb.co/rKc4Z6Xk/pubg-uc.png'],['8100 UC','390000','https://i.ibb.co/rKc4Z6Xk/pubg-uc.png'],['32400 UC','1600000','https://i.ibb.co/rKc4Z6Xk/pubg-uc.png']];
+const tgData = [['3 Months Premium','58000','https://i.ibb.co/GvjwgD3p/IMG-20251215-145341-949.png'],,['6 Months Premium','80000','https://i.ibb.co/GvjwgD3p/IMG-20251215-145341-949.png'],,['12 Months Premium','145000','https://i.ibb.co/GvjwgD3p/IMG-20251215-145341-949.png']];
+const tiktokData = [['Follower 100','2000','https://i.ibb.co/27bRySyt/IMG-20251215-145341-949.png'],['Follower 1k','15000','https://i.ibb.co/27bRySyt/IMG-20251215-145341-949.png'],['Follower 5k','63000','https://i.ibb.co/27bRySyt/IMG-20251215-145341-949.png'],['Follower 10k','125000','https://i.ibb.co/27bRySyt/IMG-20251215-145341-949.png'],['Like 1k','1200','https://i.ibb.co/rC94WPy/IMG-20251215-145341-949.png'],['Like 5k','4500','https://i.ibb.co/rC94WPy/IMG-20251215-145341-949.png'],['Like 10k','9000','https://i.ibb.co/rC94WPy/IMG-20251215-145341-949.png'],['Like 100k','85000','https://i.ibb.co/rC94WPy/IMG-20251215-145341-949.png'],['Viwe 1k','300','https://i.ibb.co/Y4h4MmQJ/IMG-20251215-145341-949.png'],['Viwe 5k','4500','https://i.ibb.co/Y4h4MmQJ/IMG-20251215-145341-949.png'],['Viwe 10k','9000','https://i.ibb.co/Y4h4MmQJ/IMG-20251215-145341-949.png'],['Viwe 100k','18000','https://i.ibb.co/Y4h4MmQJ/IMG-20251215-145341-949.png'],['Share 1k','1000','https://i.ibb.co/fzDT3tzc/IMG-20251215-145341-949.png'],['Share 5k','4000','https://i.ibb.co/fzDT3tzc/IMG-20251215-145341-949.png'],['Share 10k','8000','https://i.ibb.co/fzDT3tzc/IMG-20251215-145341-949.png'],['Share 100k','70000','https://i.ibb.co/fzDT3tzc/IMG-20251215-145341-949.png'],['Save 1k','500','https://i.ibb.co/p6KqFX73/IMG-20251215-145341-949.png'],['Save 5k','2000','https://i.ibb.co/p6KqFX73/IMG-20251215-145341-949.png'],['Save 10k','3500','https://i.ibb.co/p6KqFX73/IMG-20251215-145341-949.png'],['Save 100k','25000','https://i.ibb.co/p6KqFX73/IMG-20251215-145341-949.png'],['promote follower (1$)','6500','https://i.ibb.co/b51D75Ym/IMG-20251215-145341-949.png'],['promote follower (3$)','19000','https://i.ibb.co/b51D75Ym/IMG-20251215-145341-949.png'],['promote follower (5$)','29000','https://i.ibb.co/b51D75Ym/IMG-20251215-145341-949.png'],['promote follower (10$)','60000','https://i.ibb.co/b51D75Ym/IMG-20251215-145341-949.png'],['Promote View (1$)','6500','https://i.ibb.co/b51D75Ym/IMG-20251215-145341-949.png'],['Promote View (3$)','19000','https://i.ibb.co/b51D75Ym/IMG-20251215-145341-949.png'],['Promote View (5$)','30000','https://i.ibb.co/b51D75Ym/IMG-20251215-145341-949.png'],['Promote View (10$)','60000','https://i.ibb.co/b51D75Ym/IMG-20251215-145341-949.png'],['Promote cm&like (1$)','6500','https://i.ibb.co/b51D75Ym/IMG-20251215-145341-949.png'],['Promote cm&like (3$)','19000','https://i.ibb.co/b51D75Ym/IMG-20251215-145341-949.png'],['Promote cm&like (5$)','30000','https://i.ibb.co/b51D75Ym/IMG-20251215-145341-949.png'],['Promote cm&like (10$)','60000','https://i.ibb.co/b51D75Ym/IMG-20251215-145341-949.png']];
+
+const mmData = {
+  pass: [['Weekly Pass','6200','https://i.ibb.co/TBtp7bt8/IMG-20251215-144936-249.png'],['Twilight Pass','34000','https://i.ibb.co/dJVkbqfj/IMG-20251215-145341-949.png'],['အပတ်စဉ် Epic','6200','https://i.ibb.co/MxsBWPYj/IMG-20251215-144936-249.png'],['လစဉ် Epic','6200','https://i.ibb.co/MxsBWPYj/IMG-20251215-144936-249.png']],
+  promo: [['50+50 Diamond','3500','https://i.ibb.co/HD7G7Lf2/IMG-20251215-145344-325.png'],['150+150 Diamond','1100','https://i.ibb.co/TB1jgNXv/IMG-20251215-145344-325.png'],['250+250 Diamond','17000','https://i.ibb.co/TB1jgNXv/IMG-20251215-145344-325.png'],['500+500 Diamond','34000','https://i.ibb.co/DHKq8CKw/IMG-20251215-145344-325.png']],
+  direct: [['11 Diamond','1000','https://i.ibb.co/MDZqgNSW/IMG-20251215-145344-325.png'],['22 Diamond','1900','https://i.ibb.co/MDZqgNSW/IMG-20251215-145344-325.png'],['33 Diamond','3000','https://i.ibb.co/MDZqgNSW/IMG-20251215-145344-325.png'],['44 Diamond','3700','https://i.ibb.co/MDZqgNSW/IMG-20251215-145344-325.png'],['56 Diamond','5000','https://i.ibb.co/MDZqgNSW/IMG-20251215-145344-325.png'],['86 Diamond','5300','https://i.ibb.co/DHKq8CKw/IMG-20251215-145344-325.png'],['173 Diamond','10000','https://i.ibb.co/DHKq8CKw/IMG-20251215-145344-325.png'],['257 Diamond','15000','https://i.ibb.co/DHKq8CKw/IMG-20251215-145344-325.png'],['343 Diamond','20000','https://i.ibb.co/FLz3cVMz/IMG-20251215-145344-325.png'],['429 Diamond','24500','https://i.ibb.co/FLz3cVMz/IMG-20251215-145344-325.png'],['515 Diamond','31000','https://i.ibb.co/fzwfWcbY/IMG-20251215-145344-325.png'],['600 Diamond','36500','https://i.ibb.co/fzwfWcbY/IMG-20251215-145344-325.png'],['706 Diamond','42000','https://i.ibb.co/fzwfWcbY/IMG-20251215-145344-325.png'],['963 Diamond','54000','https://i.ibb.co/fzwfWcbY/IMG-20251215-145344-325.png'],['1049 Diamond','62000','https://i.ibb.co/fzwfWcbY/IMG-20251215-145344-325.png'],['1135 Diamond','63500','https://i.ibb.co/LdtcQx49/IMG-20251215-145344-325.png'],['2195 Diamond','117000','https://i.ibb.co/LdtcQx49/IMG-20251215-145344-325.png'],['3688 Diamond','200000','https://i.ibb.co/LdtcQx49/IMG-20251215-145344-325.png'],['5532 Diamond','300000','https://i.ibb.co/LdtcQx49/IMG-20251215-145344-325.png'],['9288 Diamond','500000','https://i.ibb.co/LdtcQx49/IMG-20251215-145344-325.png']],
+};
+
+const malData = { pass: [['Weekly Pass','9200','https://i.ibb.co/TBtp7bt8/IMG-20251215-144936-249.png']], promo: [['50+50 Diamond','3200','https://i.ibb.co/HD7G7Lf2/IMG-20251215-145344-325.png'],['150+150 Diamond','1100','https://i.ibb.co/TB1jgNXv/IMG-20251215-145344-325.png'],['250+250 Diamond','17000','https://i.ibb.co/TB1jgNXv/IMG-20251215-145344-325.png'],['500+500 Diamond','34000','https://i.ibb.co/DHKq8CKw/IMG-20251215-145344-325.png']], direct: [['14 Diamond','12500','https://i.ibb.co/HD7G7Lf2/IMG-20251215-145344-325.png'],['74 Diamond','6000','https://i.ibb.co/FLz3cVMz/IMG-20251215-145344-325.png'],['140 Diamond','12000','https://i.ibb.co/FLz3cVMz/IMG-20251215-145344-325.png'],['284 Diamond','22000','https://i.ibb.co/FLz3cVMz/IMG-20251215-145344-325.png'],['429 Diamond','6000','https://i.ibb.co/fzwfWcbY/IMG-20251215-145344-325.png'],['2976 Diamond','200000','https://i.ibb.co/LdtcQx49/IMG-20251215-145344-325.png']] };
+const phData = { pass: [['Weekly Pass','6000','https://i.ibb.co/TBtp7bt8/IMG-20251215-144936-249.png']], promo: [['50+50 Diamond','5000','https://i.ibb.co/HD7G7Lf2/IMG-20251215-145344-325.png'],['150+150 Diamond','16000','https://i.ibb.co/TB1jgNXv/IMG-20251215-145344-325.png'],['250+250 Diamond','25000','https://i.ibb.co/TB1jgNXv/IMG-20251215-145344-325.png'],['500+500 Diamond','50000','https://i.ibb.co/DHKq8CKw/IMG-20251215-145344-325.png']], direct: [['11 Diamonds','1000','https:/
